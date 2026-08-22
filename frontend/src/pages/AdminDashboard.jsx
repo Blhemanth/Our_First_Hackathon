@@ -10,6 +10,8 @@ import {
   XMarkIcon,
   UserCircleIcon,
   ChevronRightIcon,
+  ClockIcon,
+  BanknotesIcon,
 } from '@heroicons/react/24/outline';
 
 // ---------------------------------------------------------------------------
@@ -279,6 +281,18 @@ export default function AdminDashboard() {
             <span className="text-slate-400 text-sm hidden sm:inline">/ Admin</span>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              to="/admin/attendance"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-violet-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-violet-50"
+            >
+              <ClockIcon className="w-4 h-4" /> Attendance
+            </Link>
+            <Link
+              to="/payroll"
+              className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-violet-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-violet-50"
+            >
+              <BanknotesIcon className="w-4 h-4" /> Payroll
+            </Link>
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
               {user?.name?.charAt(0)?.toUpperCase() ?? 'A'}
             </div>

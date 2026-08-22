@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import usersRouter from './routes/users.js';
 import leaveRouter from './routes/leave.js';
+import attendanceRouter from './routes/attendance.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,6 +41,9 @@ app.use('/api/users', usersRouter);
 
 // Leave Management routes
 app.use('/api/leave', leaveRouter);
+
+// Attendance routes
+app.use('/api/attendance', attendanceRouter);
 
 // ---------------------------------------------------------------------------
 // Health Check
@@ -79,4 +83,5 @@ app.listen(PORT, () => {
   console.log(`✅ Dayflow API server running at http://localhost:${PORT}`);
   console.log(`👤 User API: http://localhost:${PORT}/api/users`);
   console.log(`📅 Leave API: http://localhost:${PORT}/api/leave`);
+  console.log(`⏱️ Attendance API: http://localhost:${PORT}/api/attendance`);
 });

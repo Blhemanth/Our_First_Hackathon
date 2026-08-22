@@ -8,6 +8,9 @@ import { Dashboard } from './pages/Dashboard';
 import ProfilePage from './pages/ProfilePage';
 import LeaveRequestPage from './pages/LeaveRequestPage';
 import LeaveApprovalPage from './pages/LeaveApprovalPage';
+import AttendancePage from './pages/AttendancePage';
+import AdminAttendancePage from './pages/AdminAttendancePage';
+import PayrollPage from './pages/PayrollPage';
 
 import { Toaster } from 'react-hot-toast';
 
@@ -31,12 +34,42 @@ export function App() {
             }
           />
 
-          {/* Employee Profile */}
+          {/* User Profile */}
           <Route
             path="/profile"
             element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Attendance Tracking */}
+          <Route
+            path="/attendance"
+            element={
+              <ProtectedRoute>
+                <AttendancePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Attendance Overview */}
+          <Route
+            path="/admin/attendance"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminAttendancePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Payroll (Role-based view in component) */}
+          <Route
+            path="/payroll"
+            element={
+              <ProtectedRoute>
+                <PayrollPage />
               </ProtectedRoute>
             }
           />

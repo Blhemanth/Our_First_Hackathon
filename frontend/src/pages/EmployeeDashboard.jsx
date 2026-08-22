@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   ClockIcon,
   CalendarDaysIcon,
+  BanknotesIcon,
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 
@@ -40,6 +41,16 @@ const CARDS = [
     gradient: 'from-emerald-500 to-teal-600',
     shadow: 'shadow-emerald-200',
     hoverRing: 'hover:ring-emerald-300',
+  },
+  {
+    id: 'payroll',
+    label: 'My Payroll',
+    description: 'View your salary and compensation details',
+    icon: BanknotesIcon,
+    to: '/payroll',
+    gradient: 'from-amber-500 to-orange-600',
+    shadow: 'shadow-amber-200',
+    hoverRing: 'hover:ring-amber-300',
   },
 ];
 
