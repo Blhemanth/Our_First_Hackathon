@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { supabase } from '../lib/supabase';
 
 /**
  * Shared Axios instance for all Dayflow API calls.
@@ -30,9 +31,18 @@ export const setAuthToken = (token) => {
 
 // Request interceptor — attaches the JWT to every outgoing request
 api.interceptors.request.use(
-  (config) => {
-    if (_token) {
-      config.headers['Authorization'] = `Bearer ${_token}`;
+  async (config) => {
+    let token = _token;
+    if (!token) {
+      try {
+        const { data } = await supabase.auth.getSession();
+        token = data?.session?.access_token;
+      } catch (err) {
+        // Fallback silently if session fails
+      }
+    }
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },

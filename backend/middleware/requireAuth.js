@@ -32,10 +32,33 @@ const requireAuth = async (req, res, next) => {
       .single();
 
     if (dbError || !userRecord) {
-      return res.status(401).json({ error: 'User record not found.' });
+      // No profile row found — auto-create one from JWT metadata so FK constraints work
+      const meta = authData.user.user_metadata || {};
+      const newProfile = {
+        id: authData.user.id,
+        email: authData.user.email,
+        name: meta.name || authData.user.email.split('@')[0],
+        employee_id: meta.employee_id || `EMP-${authData.user.id.slice(0, 6).toUpperCase()}`,
+        role: meta.role || 'employee',
+      };
+
+      const { data: inserted, error: insertError } = await supabase
+        .from('users')
+        .upsert([newProfile], { onConflict: 'id' })
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error('[requireAuth] Failed to auto-create user profile:', insertError.message);
+        // Still allow the request through with metadata — some routes don't need DB row
+        req.user = newProfile;
+      } else {
+        req.user = inserted;
+      }
+    } else {
+      req.user = userRecord;
     }
 
-    req.user = userRecord;
     next();
   } catch (err) {
     console.error('[requireAuth] Unexpected error:', err);

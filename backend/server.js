@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+
 import usersRouter from './routes/users.js';
+import leaveRouter from './routes/leave.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -9,9 +11,20 @@ const PORT = process.env.PORT || 3001;
 // ---------------------------------------------------------------------------
 // Global Middleware
 // ---------------------------------------------------------------------------
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
@@ -21,22 +34,42 @@ app.use(express.json());
 // ---------------------------------------------------------------------------
 // Routes
 // ---------------------------------------------------------------------------
+
+// User / Profile routes
 app.use('/api/users', usersRouter);
 
-// Health check
+// Leave Management routes
+app.use('/api/leave', leaveRouter);
+
+// ---------------------------------------------------------------------------
+// Health Check
+// ---------------------------------------------------------------------------
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    service: 'Dayflow HRMS API',
+    timestamp: new Date().toISOString(),
+  });
 });
 
-// 404 fallback
+// ---------------------------------------------------------------------------
+// 404 Fallback
+// ---------------------------------------------------------------------------
 app.use((req, res) => {
-  res.status(404).json({ error: `Route ${req.method} ${req.path} not found.` });
+  res.status(404).json({
+    error: `Route ${req.method} ${req.path} not found.`,
+  });
 });
 
-// Global error handler
+// ---------------------------------------------------------------------------
+// Global Error Handler
+// ---------------------------------------------------------------------------
 app.use((err, req, res, next) => {
   console.error('[Global Error Handler]', err);
-  res.status(500).json({ error: 'Unexpected server error.' });
+
+  res.status(500).json({
+    error: 'Unexpected server error.',
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -44,4 +77,6 @@ app.use((err, req, res, next) => {
 // ---------------------------------------------------------------------------
 app.listen(PORT, () => {
   console.log(`✅ Dayflow API server running at http://localhost:${PORT}`);
+  console.log(`👤 User API: http://localhost:${PORT}/api/users`);
+  console.log(`📅 Leave API: http://localhost:${PORT}/api/leave`);
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { EmployeeDashboard } from './EmployeeDashboard';
+import EmployeeDashboard from './EmployeeDashboard';
 import { AdminDashboard } from './AdminDashboard';
 
 export function Dashboard() {
