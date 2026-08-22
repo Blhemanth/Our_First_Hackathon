@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: #0f1117;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0f1117; }
+::-webkit-scrollbar-thumb { background: #2d3348; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3b6ff5; }
+
+/* ── Glass Card ──────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(25, 29, 43, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 111, 245, 0.12);
+  border-radius: 16px;
+}
+
+/* ── Input field ─────────────────────────────────────────────── */
+.field {
+  @apply w-full px-4 py-3 rounded-xl bg-surface-muted border border-surface-border
+         text-slate-100 placeholder-slate-500 text-sm
+         focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent
+         transition duration-200;
+}
+
+/* ── Primary button ──────────────────────────────────────────── */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+         bg-gradient-to-r from-brand-600 to-brand-500
+         text-white text-sm font-semibold tracking-wide
+         hover:from-brand-500 hover:to-brand-400
+         active:scale-95 transition-all duration-150
+         focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-surface;
+}
+
+/* ── Ghost button ────────────────────────────────────────────── */
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+         bg-surface-muted border border-surface-border text-slate-300 text-sm font-medium
+         hover:bg-surface-border hover:text-white
+         active:scale-95 transition-all duration-150;
+}
+
+/* ── Status badges ───────────────────────────────────────────── */
+.badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+}
+
+.badge-pending {
+  @apply bg-amber-500/15 text-amber-400 border border-amber-500/25;
+}
+
+.badge-approved {
+  @apply bg-emerald-500/15 text-emerald-400 border border-emerald-500/25;
+}
+
+.badge-rejected {
+  @apply bg-rose-500/15 text-rose-400 border border-rose-500/25;
+}
+
+/* ── Table ───────────────────────────────────────────────────── */
+.df-table {
+  @apply w-full text-sm;
+}
+
+.df-table thead tr {
+  @apply border-b border-surface-border;
+}
+
+.df-table th {
+  @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-slate-500;
+}
+
+.df-table td {
+  @apply px-4 py-4 border-b border-surface-border/50 text-slate-300;
+}
+
+.df-table tbody tr {
+  @apply hover:bg-surface-muted/40 transition-colors duration-100;
+}
+
+/* ── Gradient heading ────────────────────────────────────────── */
+.gradient-text {
+  @apply bg-gradient-to-r from-brand-400 to-indigo-400 bg-clip-text text-transparent;
+}
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.page-wrapper {
+  @apply min-h-screen bg-surface p-4 md:p-8;
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(59,111,245,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 90%, rgba(99,102,241,0.05) 0%, transparent 60%);
+}
